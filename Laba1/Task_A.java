@@ -1,4 +1,5 @@
 package com.example.laboratory1;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
@@ -28,7 +29,9 @@ class Thread1 extends Thread{
             if(count > BOUND){
                 priority=(int)spinner.getValue();
                 setPriority(priority);
-                jSlider.setValue(val+operand);
+                synchronized (jSlider) {
+                    jSlider.setValue(val + operand);
+                }
                 count = 0;
             }
         }
@@ -71,11 +74,11 @@ class Thread1 extends Thread{
         JButton btn = new JButton("Ok");
         btn.addActionListener(
                 (ActionEvent e) -> {
-                    synchronized (slider){
+                   
 
                        th1.start();
                        th2.start();
-                    }
+                    
                 });
 
 //        JButton btnPriority = new JButton("set prior");

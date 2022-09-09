@@ -3,29 +3,29 @@ import com.sun.tools.javac.Main;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
-
-
-class Thread2 extends Thread{
+class myThread extends Thread{
     private int operand;
     private JSlider jSlider;
 
-    public Thread2(int operand,JSlider slider){
+    public myThread(int operand,JSlider slider){
         this.operand=operand;
         jSlider=slider;
     }
     @Override
     public void run() {
-
-        Task_B.semaphore=1;
-        Task_B.thread_label.setText("Занято");
-        while (!interrupted()){
-            int val = jSlider.getValue();
-            if((val>10 && operand<0)||(val<90 && operand>0)){
-                jSlider.setValue(val+operand);
+        synchronized (jSlider) {
+            Task_B.semaphore = 1;
+            Task_B.thread_label.setText("Занято");
+            while (!interrupted()) {
+                int val = jSlider.getValue();
+                if ((val > 10 && operand < 0) || (val < 90 && operand > 0)) {
+                    jSlider.setValue(val + operand);
+                }
             }
         }
-        Task_B.semaphore=0;
-        Task_B.thread_label.setText("Вільно");
+                Task_B.semaphore = 0;
+                Task_B.thread_label.setText("Вільно");
+
 
     }
 
@@ -34,8 +34,8 @@ class Thread2 extends Thread{
 
 class Task_B {
     public static int semaphore=0;
-    public static Thread2 thread1;
-    public static Thread2 thread2;
+    public static myThread thread1;
+    public static myThread myThread;
     public static JLabel thread_label =new JLabel("Вільно");
     public static void main(String[] args) {
         JFrame win = new JFrame();
@@ -60,6 +60,7 @@ class Task_B {
         JPanel threadPanel2= new JPanel();
         JButton threadStart2 =new JButton("ПУСК2");
         JButton threadStop2 =new JButton("СТОП2");
+        threadStop2.setEnabled(false);
 
 
 
@@ -67,7 +68,7 @@ class Task_B {
 
         threadStart1.addActionListener(e -> {
             if (semaphore==0) {
-                thread1 = new Thread2(1, slider);
+                thread1 = new myThread(1, slider);
                 thread1.start();
                 thread1.setPriority(Thread.MIN_PRIORITY);
                 threadStop1.setEnabled(true);
@@ -86,9 +87,9 @@ class Task_B {
 
         threadStart2.addActionListener(e -> {
             if(semaphore==0) {
-                thread2 = new Thread2(-1, slider);
-                thread2.start();
-                thread2.setPriority(Thread.MAX_PRIORITY);
+                myThread = new myThread(-1, slider);
+                myThread.start();
+                myThread.setPriority(Thread.MAX_PRIORITY);
                 threadStop2.setEnabled(true);
                 threadStart2.setEnabled(false);
             }
@@ -96,7 +97,7 @@ class Task_B {
 
         threadStop2.addActionListener(e -> {
             if (semaphore==1) {
-                thread2.interrupt();
+                myThread.interrupt();
                 threadStop2.setEnabled(false);
                 threadStart2.setEnabled(true);
             }
@@ -108,9 +109,6 @@ class Task_B {
         threadPanel2.add(threadStart2);
         threadPanel2.add(threadStop2);
         threadPanel2.add(thread_label);
-
-
-
 
 
         panel.add(slider);
