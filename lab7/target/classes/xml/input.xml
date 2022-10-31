@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Airport>
+    <AirCompany id="1" name="MAU">
+        <Flight id="1" departure="Kyiv" destination="Lviv" companyID="1" passengers="70"/>
+        <Flight id="2" departure="Paris" destination="Lviv" companyID="1" passengers="100"/>
+        <Flight id="3" departure="Kyiv" destination="Paris" companyID="1" passengers="100"/>
+    </AirCompany>
+    <AirCompany id="2" name="Windrose">
+        <Flight id="4" departure="Kyiv" destination="Odessa" companyID="2" passengers="80"/>
+        <Flight id="5" departure="Paris" destination="Madrid" companyID="2" passengers="120"/>
+    </AirCompany>
+    <AirCompany id="3" name="Emirates">
+        <Flight id="6" departure="Kyiv" destination="Dubai" companyID="3" passengers="100"/>
+    </AirCompany>
+</Airport>
