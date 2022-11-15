@@ -17,6 +17,10 @@ public class Flight {
         this.departure = departure;
         this.passangers = passangers;
     }
+    @Override
+    public String toString(){
+        return "id - " +this.id + "\n" + "companyId - " + this.companyID+"\n" + this.departure + " - " + this.destination + "\n" + "passengers - " + this.passangers;
+    }
 
     public long getCompanyID() {
         return companyID;

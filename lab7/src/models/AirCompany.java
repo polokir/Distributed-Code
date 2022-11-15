@@ -50,6 +50,11 @@ public class AirCompany {
     }
 
     @Override
+    public String toString(){
+        return "id - " + this.id + "\n" + "name - "+this.name + flights.toString();
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
